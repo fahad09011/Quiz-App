@@ -114,7 +114,7 @@ nextbutton.addEventListener("click", () => {
             questioncounter++;
             displayQuestion(questioncounter);
         }
-    }, 100);
+    }, 1000);
 });
 
 
