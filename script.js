@@ -1,5 +1,7 @@
 let question = document.getElementsByClassName("question")[0];
 
+
+//  this is the main (parent)  container of options, and option is the (child ) of qs-option-container
 let optionsContainer = document.querySelector(".qs-option-container");
 
 let nextbutton = document.getElementsByClassName("next")[0];
@@ -7,9 +9,13 @@ let prevbutton = document.getElementsByClassName("previuos")[0];
 let submitbutton = document.getElementsByClassName("submit")[0];
 let showQsNumberOnTop = document.getElementsByClassName("show-qs-number")[0];
 
+
+//this is the counter fot tracking the current question to be display to user
 let questioncounter = 0;
 let useroption = [];
 
+
+// quizdat ais the an array which consist of object ( 5 question with descriotion) ,we can access each opject of an array by index 
 let quizdata = [
     {
         question: "How Many Days in the Week?",
@@ -38,14 +44,20 @@ let quizdata = [
     }
 ]
 
+
+// <--------------this is the function for display th equestion to user ------------------->
 function displayQuestion(index) {
+
+    // at initial before display the options are intiale to blank it will be shown according to question  number
     optionsContainer.textContent = "";
 
+
+    // this (currentquestion) store the question  according to the number the number depends on [index(which is parameter/argument of function)]
     const currentquestion = quizdata[index]
     question.textContent = currentquestion.question;
 
-    //display option
 
+    //for each loop is used to display the each option of question .at first we create dynamically the (P) element to to show option . currentquestion.options ..in this .options ..is the key of array object
     currentquestion.options.forEach((option, opindex) => {
         let optionElement = document.createElement("p");
         optionElement.innerText = option;
@@ -69,7 +81,7 @@ function displayQuestion(index) {
 
 
 
-
+//<----- this function display th equestions wheneer the load ---->
 document.addEventListener("DOMContentLoaded", () => {
     displayQuestion(questioncounter);
 });
@@ -88,6 +100,7 @@ nextbutton.addEventListener("click", () => {
     // Highlight correct and incorrect answers
     const allOptions = document.querySelectorAll(".option");
     allOptions.forEach((option, index) => {
+
         if (index === currentQuestion.correct) {
             option.style.backgroundColor = "green"; // Correct option
         } else if (index === selectedOptionIndex) {
@@ -113,16 +126,24 @@ prevbutton.addEventListener("click", () => {
     }
 });
 
+
+// when user click on submit button the final result will be shown to user and user can alsoo restart the quix after submitted first one.
 submitbutton.addEventListener("click", () => {
     let score = 0;
 
-    quizdata.forEach((question, index) => {
+
+
+    quizdata.forEach((question, index) => { // check the the correct answer and then increase the score 
         if (useroption[index] === question.correct) {
             score++;
         }
     });
-question.textContent="";
+
+// after click on submit the question and optioncontainer(options) are  blank
+question.textContent=""; 
     optionsContainer.textContent = "";
+
+    // here we create the div , inside the div we create 1 (h1) element and 1 Restartbutton . we coonect the h1 tag and button to div by using .appendchild below.
     const resultcontainer = document.createElement("div");
     resultcontainer.classList.add("resultcontainer")
     const resultpara = document.createElement("h1");
@@ -135,9 +156,12 @@ question.textContent="";
     restartbutton.textContent = "Re-Start Quiz";
     restartbutton.classList.add("btn")
     restartbutton.addEventListener("click", () => {
+        // after clicking restart button the questionCounter and useroption also intialize to deflt(0).
         questioncounter = 0;
         useroption = [];
         displayQuestion(questioncounter);
+        prevbutton.hidden=false;
+        nextbutton.hidden=false;
     });
 
 
