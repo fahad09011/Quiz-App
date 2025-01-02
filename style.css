@@ -92,3 +92,15 @@ body{
  /* visibility: hidden;    */
 }
 
+
+
+.resultcontainer{
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    margin: 0;
+    gap: 20px;
+}

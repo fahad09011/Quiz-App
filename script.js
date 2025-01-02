@@ -51,7 +51,7 @@ function displayQuestion(index) {
         optionElement.innerText = option;
         optionElement.classList.add("option");
         optionElement.addEventListener("click", () => {
-            
+
             useroption[index] = opindex;
             document.querySelectorAll(".option").forEach(opt => opt.style.backgroundColor = "");
             optionElement.style.backgroundColor = "lightgray";
@@ -69,49 +69,17 @@ function displayQuestion(index) {
 
 
 
-// function handleOptionClick(selectedOption, selectedIndex, correctIndex) {
-//     // Disable all options
-//     document.querySelectorAll(".option").forEach(opt => {
-//         opt.style.pointerEvents = "none";
-//     });
-
-//     if (selectedIndex === correctIndex) {
-//         // Correct answer
-//         selectedOption.style.backgroundColor = "green";
-//     } else {
-//         // Incorrect answer
-//         selectedOption.style.backgroundColor = "red";
-//         // Highlight the correct option
-//         document.querySelectorAll(".option")[correctIndex].style.backgroundColor = "green";
-//     }
-// }
-
-
-
-
-
 
 document.addEventListener("DOMContentLoaded", () => {
     displayQuestion(questioncounter);
 });
 
-// next button
-// nextbutton.addEventListener("click", () => {
-//     if (questioncounter < quizdata.length - 1) {
-//         questioncounter++;
-//         displayQuestion(questioncounter);
-//         if (useroption==options) {
-//             alert("okekrerferf")
-//         }
-//     }
 
-
-// });
 
 nextbutton.addEventListener("click", () => {
     const currentQuestion = quizdata[questioncounter];
     const selectedOptionIndex = useroption[questioncounter];
-    
+
     if (selectedOptionIndex === undefined) {
         alert("Please select an option before proceeding!");
         return;
@@ -133,25 +101,8 @@ nextbutton.addEventListener("click", () => {
             questioncounter++;
             displayQuestion(questioncounter);
         }
-    }, 5000);
+    }, 100);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // prev button
@@ -160,4 +111,42 @@ prevbutton.addEventListener("click", () => {
         questioncounter--;
         displayQuestion(questioncounter);
     }
+});
+
+submitbutton.addEventListener("click", () => {
+    let score = 0;
+
+    quizdata.forEach((question, index) => {
+        if (useroption[index] === question.correct) {
+            score++;
+        }
+    });
+question.textContent="";
+    optionsContainer.textContent = "";
+    const resultcontainer = document.createElement("div");
+    resultcontainer.classList.add("resultcontainer")
+    const resultpara = document.createElement("h1");
+    resultpara.textContent = `Your Quiz Score is ${score} Out of 5!`;
+    resultpara.style.fontWeight = "3rem";
+
+
+
+    const restartbutton = document.createElement("button");
+    restartbutton.textContent = "Re-Start Quiz";
+    restartbutton.classList.add("btn")
+    restartbutton.addEventListener("click", () => {
+        questioncounter = 0;
+        useroption = [];
+        displayQuestion(questioncounter);
+    });
+
+
+resultcontainer.appendChild(resultpara)
+resultcontainer.appendChild(restartbutton)
+optionsContainer.appendChild(resultcontainer);
+
+nextbutton.hidden=true;
+prevbutton.hidden=true;
+    submitbutton.hidden=true;
+   
 });
